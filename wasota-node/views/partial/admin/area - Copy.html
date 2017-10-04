@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>WASOTA admin area</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+   <script type="text/javascript" src="func.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="javascripts/controllers/addCtrl.js">
+</script>
+  <script src="../javascripts/controllers/homeCtrl.js">
+</script>
+  <script src="../javascripts/controllers/searchCtrl.js">
+</script>
+<script src="../javascripts/ng-table/ng-table.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle navbar-toggle-sidebar collapsed">
+			MENU
+			</button>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">
+				Administrator
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">      
+			<form class="navbar-form navbar-left" method="GET" role="search">
+				<div class="form-group">
+					<input type="text" name="q" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+			</form>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="http://mex.aksw.org" target="_blank">Visit Our Main Project Page {{name}}</a></li>
+				<li class="dropdown ">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Account
+						<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="dropdown-header">SETTINGS</li>
+							<li class=""><a href="#">Edit Profile</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>  	<div class="container-fluid main-container">
+  		<div class="col-md-2 sidebar">
+  			<div class="row">
+	<!-- uncomment code for absolute positioning tweek see top comment in css -->
+	<div class="absolute-wrapper"> </div>
+	<!-- Menu -->
+	<div class="side-menu">
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Main Menu -->
+			<div class="side-menu-container">
+				<ul class="nav nav-pills nav-stacked admin-menu">
+					<li class="active"><a href="#" data-target-id="home"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+					<li><a href="#" data-target-id="add"><span class="glyphicon glyphicon-cloud"></span> Add Experiment</a></li>
+                 <li><a href="#" data-target-id="experiments"><span class="glyphicon glyphicon-link"></span> My experiments</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+
+	</div>
+</div>  		</div>
+  		<div class="col-md-10 content">
+  			 <div class="col-md-9 well admin-content" id="home">
+		Welcome! Share your experiments in WASOTA Portal
+    </div>
+            
+             <div class="col-md-9 well admin-content" id="add">
+            <div class="page-header">
+	<h1>Add</h1>
+</div>
+<h2 style="margin-top: 35px">Add your experiment:</h2>
+<p>Choose a graph identifier:</p>
+
+<div>
+	<input type="text" ng-model="graphIdentifier" size="80">
+</div>
+
+</br>
+
+<div>
+<p>Choose the serialization format:</p>
+
+<select ng-model="serializationFormat" ng-options="a.name for a in formats">
+		<option value="">-- format --</option>
+</select>
+</div>
+
+</br>
+<div>
+<p>Paste your MEX file here:</p>
+
+<textarea ng-model="graph" rows="10" cols="150">
+
+</textarea>
+
+</div>
+
+
+<div style="margin-top: 15px">
+	<button ng-click="sendGraph()">Go!</button>
+</div>
+
+
+
+<div style="margin-top: 15px"><span ng-show="showApiCall"><p>API call: <a href="{{apiResponse.apiCall}}" target="_blank">{{apiResponse.apiCall}}</a></p></span></div>
+<span style="color: {{showApiResponseColor}}" ng-show="showApiResponse">
+<p>API response: {{coreMsg}}</p>
+</span>
+<h5 ng-show="showLoading" class="label btn-success">Loading... </h5>
+
+        </div>
+       <div class="col-md-9 well admin-content" id="experiments">
+           
+<div class="page-header">
+	<h1>My experiments</h1>
+</div>
+<h4 style="margin-top: 35px">Types</h4>
+<div>
+	<select  ng-change="updatePerformance()" ng-model="context" ng-options="Recommendation System">
+    <option>Recommendation System</option>
+	</select>
+</div>
+
+
+<h4 style="margin-top: 35px">Performance Measure</h4>
+
+<div>
+	<select ng-change="updateTable()" ng-model="precision" ng-options="k for k in precisionList">
+    <option>http://mex.aksw.org/mex-perf#accuracy</option>
+	</select>
+</div>
+
+<table ng-table="vm.tableParams" class="table ng-scope ng-table" show-filter="false"><!-- ngInclude: templates.header --><thead ng-include="templates.header" class="ng-scope"><!-- ngIf: params.hasGroup() --> <tr class="ng-table-sort-header"> <!-- ngRepeat: $column in $columns --><!-- ngIf: $column.show(this) --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Algorithm</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngIf: $column.show(this) --><!-- end ngRepeat: $column in $columns --><!-- ngIf: $column.show(this) --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Algorithm Class</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngIf: $column.show(this) --><!-- end ngRepeat: $column in $columns --><!-- ngIf: $column.show(this) --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Experiment ID</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngIf: $column.show(this) --><!-- end ngRepeat: $column in $columns --><!-- ngIf: $column.show(this) --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Experiment Title</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngIf: $column.show(this) --><!-- end ngRepeat: $column in $columns --><!-- ngIf: $column.show(this) --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Measure</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngIf: $column.show(this) --><!-- end ngRepeat: $column in $columns --><!-- ngIf: $column.show(this) --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">User</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngIf: $column.show(this) --><!-- end ngRepeat: $column in $columns --><!-- ngIf: $column.show(this) --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Value</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th>
+  <th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-if="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable">Public</th>
+  <!-- end ngIf: $column.show(this) --><!-- end ngRepeat: $column in $columns --> </tr> </thead>
+    <tbody><!-- ngRepeat: result in results --><tr ng-repeat="result in results" class="ng-scope">
+        <td title="'Algorithm'" filter="{ algorithmLbl: 'text'}" sortable="'algorithmLbl'" data-title-text="Algorithm" class="ng-binding">
+            Train</td>
+        <td title="'Algorithm Class'" filter="{ algorithmClass: 'text'}" sortable="'algorithmClass'" data-title-text="Algorithm Class" class="ng-binding">
+            http://mex.aksw.org/mex-algo#SupportVectorMachines</td>
+            
+        <td title="'Experiment ID'" filter="{ experimentID: 'text'}" sortable="'experimentID'" data-title-text="Experiment ID" class="ng-binding">
+            E001</td>
+            
+        <td title="'Experiment Title'" filter="{ experimentTitle: 'text'}" sortable="'experimentTitle'" data-title-text="Experiment Title" class="ng-binding">
+            my first experiment</td>
+            
+        <td title="'Measure'" filter="{ measure: 'text'}" sortable="'measure'" data-title-text="Measure" class="ng-binding">
+            http://mex.aksw.org/mex-perf#accuracy</td>
+            
+        <td title="'User'" filter="{ userMail: 'text'}" sortable="'userMail'" data-title-text="User" class="ng-binding">
+            esteves@informatik.uni-leipzig.de</td>            
+                        
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding">
+            0.96</td>
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding"><input type="checkbox" name="check" value="yes"></td>
+
+
+   
+    </tr>
+      <!-- end ngRepeat: result in results --><tr ng-repeat="result in results" class="ng-scope">
+        <td title="'Algorithm'" filter="{ algorithmLbl: 'text'}" sortable="'algorithmLbl'" data-title-text="Algorithm" class="ng-binding">
+            Support Vector Machines</td>
+        <td title="'Algorithm Class'" filter="{ algorithmClass: 'text'}" sortable="'algorithmClass'" data-title-text="Algorithm Class" class="ng-binding">
+            http://mex.aksw.org/mex-algo#SupportVectorMachines</td>
+            
+        <td title="'Experiment ID'" filter="{ experimentID: 'text'}" sortable="'experimentID'" data-title-text="Experiment ID" class="ng-binding">
+            E001</td>
+            
+        <td title="'Experiment Title'" filter="{ experimentTitle: 'text'}" sortable="'experimentTitle'" data-title-text="Experiment Title" class="ng-binding">
+            my first experiment</td>
+            
+        <td title="'Measure'" filter="{ measure: 'text'}" sortable="'measure'" data-title-text="Measure" class="ng-binding">
+            http://mex.aksw.org/mex-perf#accuracy</td>
+            
+        <td title="'User'" filter="{ userMail: 'text'}" sortable="'userMail'" data-title-text="User" class="ng-binding">
+            esteves@informatik.uni-leipzig.de</td>            
+                        
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding">
+            0.96</td>
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding"><input type="checkbox" name="check2" value="yes"></td>
+
+
+   
+      </tr>
+      <!-- end ngRepeat: result in results --><tr ng-repeat="result in results" class="ng-scope">
+        <td title="'Algorithm'" filter="{ algorithmLbl: 'text'}" sortable="'algorithmLbl'" data-title-text="Algorithm" class="ng-binding">
+            HyperParameter Collection</td>
+        <td title="'Algorithm Class'" filter="{ algorithmClass: 'text'}" sortable="'algorithmClass'" data-title-text="Algorithm Class" class="ng-binding">
+            http://mex.aksw.org/mex-algo#SupportVectorMachines</td>
+            
+        <td title="'Experiment ID'" filter="{ experimentID: 'text'}" sortable="'experimentID'" data-title-text="Experiment ID" class="ng-binding">
+            E001</td>
+            
+        <td title="'Experiment Title'" filter="{ experimentTitle: 'text'}" sortable="'experimentTitle'" data-title-text="Experiment Title" class="ng-binding">
+            my first experiment</td>
+            
+        <td title="'Measure'" filter="{ measure: 'text'}" sortable="'measure'" data-title-text="Measure" class="ng-binding">
+            http://mex.aksw.org/mex-perf#accuracy</td>
+            
+        <td title="'User'" filter="{ userMail: 'text'}" sortable="'userMail'" data-title-text="User" class="ng-binding">
+            esteves@informatik.uni-leipzig.de</td>            
+                        
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding">
+            0.83</td>
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding"><input type="checkbox" name="check3" value="yes"></td>
+
+
+   
+      </tr>
+      <!-- end ngRepeat: result in results --><tr ng-repeat="result in results" class="ng-scope">
+        <td title="'Algorithm'" filter="{ algorithmLbl: 'text'}" sortable="'algorithmLbl'" data-title-text="Algorithm" class="ng-binding">
+            HyperParameter Collection</td>
+        <td title="'Algorithm Class'" filter="{ algorithmClass: 'text'}" sortable="'algorithmClass'" data-title-text="Algorithm Class" class="ng-binding">
+            http://mex.aksw.org/mex-algo#SupportVectorMachines</td>
+            
+        <td title="'Experiment ID'" filter="{ experimentID: 'text'}" sortable="'experimentID'" data-title-text="Experiment ID" class="ng-binding">
+            E001</td>
+            
+        <td title="'Experiment Title'" filter="{ experimentTitle: 'text'}" sortable="'experimentTitle'" data-title-text="Experiment Title" class="ng-binding">
+            my first experiment</td>
+            
+        <td title="'Measure'" filter="{ measure: 'text'}" sortable="'measure'" data-title-text="Measure" class="ng-binding">
+            http://mex.aksw.org/mex-perf#accuracy</td>
+            
+        <td title="'User'" filter="{ userMail: 'text'}" sortable="'userMail'" data-title-text="User" class="ng-binding">
+            esteves@informatik.uni-leipzig.de</td>            
+                        
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding">
+            0.83</td>
+        <td title="'Value'" filter="{ value: 'number'}" sortable="'value'" data-title-text="Value" class="ng-binding"><input type="checkbox" name="check4" value="yes"></td>
+
+
+   
+      </tr>
+      <!-- end ngRepeat: result in results -->
+</tbody></table>
+        </div>
+</div>
+  		</div>
+  		<footer class="pull-left footer">
+  			<p class="col-md-12">
+  				<hr class="divider">
+  				Copyright &COPY; 2016 <a href="http://mex.aksw.org">MEX Project</a>
+  			</p>
+  		</footer>
+
+</body>
+</html>

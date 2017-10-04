@@ -1,0 +1,86 @@
+body {
+  /*padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+
+
+circle.node {
+  fill: lightsteelblue;
+  stroke: #555;
+  stroke-width: 3px;
+}
+circle.leaf {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+path.hull {
+  fill: lightsteelblue;
+  fill-opacity: 0.3;
+}
+line.link {
+  stroke: #333;
+  stroke-opacity: 0.5;
+}
+
+
+
+path.link {
+	fill: none;
+	stroke: #666;
+	stroke-width: 1.5px;
+}
+
+circle {
+	fill: #ccc;
+	stroke: #fff;
+	stroke-width: 1.5px;
+}
+
+text {
+	fill: #000;
+	font: 10px sans-serif;
+	pointer-events: none;
+}
+div.tooltip2 {
+  position: absolute;	
+  width: 100px;	
+  height: 28px;		
+  padding: 2px;	
+  font: 12px sans-serif;	
+  background: lightsteelblue;	
+  border: 0px;					
+  border-radius: 8px;
+ /*  pointer-events: none;	This line needs to be removed */
+}
+
+/*.container
+{
+    display:table;
+    width: 100%;
+    margin-top: -50px;
+    padding-top: 50px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}*/
+
+
+@media (min-width:992px) {
+    .row {
+        position: relative;
+    }
+    .col-md-3 {
+        position: absolute;
+        height: 100%;
+        max-height: 100%;
+    }
+    .col-md-9 {
+        margin-left: 25%; /*Or float:right;*/
+   display: table-cell;
+    }
+}

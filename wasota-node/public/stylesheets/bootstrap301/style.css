@@ -1,0 +1,78 @@
+body {
+	background-color: #ffffff;
+
+}
+
+.lato, div, h1, h2, h3, h4 {
+	font-family: 'Lato', serif;
+}
+
+#header {
+	box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+#heading {
+	padding-top: 100px;
+}
+
+#thr-slider {
+	width: 460px;
+}
+
+#content div.tooltip-inner {
+	color: white;
+}
+
+#menu {
+	padding-top: 5px;
+}
+
+.nav a {
+	font-size: 1.5em !important;
+}
+
+.demo-block {
+	margin-top: 10px;
+}
+
+.campo {
+	margin-bottom: 10px;
+}
+
+.demo-container {
+	padding-top: 60px;
+}
+
+.jumbotron {
+    background-size: cover;
+    background-image: url("../../images/wasota-background.png");
+    background-position: bottom;
+    /* The url is relative to the document, not to the css file! */
+    /* Prefer absolute urls to avoid confusion. */
+    -ms-behavior: url("backgroundsize.min.htc");
+    color: #ffffff;
+    text-shadow: 1px 1px 0px #333333;
+    box-shadow: 0px -3px 7px rgba(0, 0, 0, 0.2) inset;
+    height: 465px;
+}
+
+#content {
+	margin-top: 20px;
+}
+
+#content div, #content h1, #content h2, #content h3, #content h4 {
+	color: #202020;
+}
+
+.centered-text {
+	text-align: center;
+}
+
+.lato-bold {
+	font-family: 'Lato', serif;
+	font-weight: bold;
+}
+
+footer {
+	text-align: left;
+}

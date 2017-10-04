@@ -1,0 +1,50 @@
+<div id="content" class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+		<div class="page-header" style="margin-top: 70px;">
+			<h1>Upload results</h1>
+		</div>
+		<h2 style="margin-top: 35px">Add your experiment:</h2>
+		<p>Choose a graph identifier:</p>
+
+		<div>
+			<input type="text" ng-model="graphIdentifier" size="80">
+		</div>
+
+		</br>
+
+		<div>
+		<p>Choose the serialization format:</p>
+
+		<select ng-model="serializationFormat" ng-options="a.name for a in formats">
+				<option value="">-- format --</option>
+		</select>
+		</div>
+
+		</br>
+		<div>
+		<p>Paste your MEX file here:</p>
+
+		<textarea ng-model="graph" rows="10" cols="150">
+
+		</textarea>
+
+		</div>
+
+
+		<div style="margin-top: 15px">
+			<button ng-click="sendGraph()">Go!</button>
+		</div>
+
+
+
+		<div style="margin-top: 15px"><span ng-show="showApiCall"><p>API call: <a href="{{apiResponse.apiCall}}" target="_blank">{{apiResponse.apiCall}}</a></p></span></div>
+		<span style="color: {{showApiResponseColor}}" ng-show="showApiResponse">
+		<p>API response: {{coreMsg}}</p>
+		</span>
+		<h5 ng-show="showLoading" class="label btn-success">Loading... </h5>
+		
+	</div>
+  </div>
+</div>

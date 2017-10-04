@@ -1,0 +1,25 @@
+<div class="page-header">
+	<h1>Add</h1>
+</div>
+<h2 style="margin-top: 35px">Step 1. .</h2>
+<p>Graph URI</p>
+
+<div>
+	<input type="text" ng-model="graphURI" size="80">
+	<!--urn:graph:update:test:put-->
+	<select ng-model="serializationFormat" ng-options="a.name for a in formats">
+		<option value="">-- format --</option>
+	</select>
+</div>
+<div style="margin-top: 15px">
+	<button ng-click="sendGraph()">Add</button>
+</div>
+
+
+
+<div style="margin-top: 15px"><span ng-show="showApiCall"><p>API call: <a href="{{apiResponse.apiCall}}" target="_blank">{{apiResponse.apiCall}}</a></p></span></div>
+<span style="color: {{showApiResponseColor}}" ng-show="showApiResponse">
+<p>API response: {{apiResponse.coreMsg}}</p>
+<p style="color: {{apiResponse.error ? 'red' : 'black'}}">API parser response: {{apiResponse.parserMsg}}</p>
+</span>
+<h5 ng-show="showLoading" class="label btn-success">Loading... </h5>

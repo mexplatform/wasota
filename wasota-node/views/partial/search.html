@@ -1,0 +1,72 @@
+<div id="content" class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+		<div class="page-header" style="margin-top: 70px;">
+			<h1>Search</h1>
+		</div>
+		<h4 style="margin-top: 35px">What is the state of the art for:</h4>
+
+		<div>
+			<select  ng-change="updatePerformance()" ng-model="context" ng-options="k as a for (k,a) in contextList">
+			</select>
+		</div>
+
+
+		<h4 style="margin-top: 35px">Performance Measure</h4>
+
+		<div>
+			<select ng-change="updateTable()" ng-model="performance" ng-options="k for k in performanceList">
+			</select>
+
+		</div>
+
+
+		<table ng-table="vm.tableParams" class="table" show-filter="false">
+		    <tr ng-repeat="result in results">
+		        <td title="'Algorithm'" filter="{ algorithmLbl: 'text'}" sortable="'algorithmLbl'">
+		            {{result.algorithmLbl}}</td>
+		        <td title="'Algorithm Class'" filter="{ algorithmClass: 'text'}" sortable="'algorithmClass'">
+		            {{result.algorithmClass}}</td>
+            
+		        <td title="'Experiment ID'" filter="{ experimentID: 'text'}" sortable="'experimentID'">
+		            {{result.experimentID}}</td>
+            
+		        <td title="'Experiment Title'" filter="{ experimentTitle: 'text'}" sortable="'experimentTitle'">
+		            {{result.experimentTitle}}</td>
+            
+		        <td title="'Measure'" filter="{ performance: 'text'}" sortable="'performance'">
+		            {{result.performance}}</td>
+            
+		        <td title="'User'" filter="{ userMail: 'text'}" sortable="'userMail'">
+		            {{result.userMail}}</td>            
+                        
+		        <td title="'Value'" filter="{ performanceValue: 'number'}" sortable="'performanceValue'">
+		            {{result.performanceValue}}</td>
+
+
+   
+		    </tr>
+		</table>
+			
+	</div>
+  </div>
+</div>
+
+<!--<table ng-table="vm.tableParams" class="table" show-filter="true">
+    <tr ng-repeat="user in data">
+        <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+            {{user.name}}</td>
+        <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
+            {{user.age}}</td>
+    </tr>
+</table>-->
+
+
+
+<!--<div style="margin-top: 15px"><span ng-show="showApiCall"><p>API call: <a href="{{apiResponse.apiCall}}" target="_blank">{{apiResponse.apiCall}}</a></p></span></div>
+<span style="color: {{showApiResponseColor}}" ng-show="showApiResponse">
+<p>API response: {{apiResponse.coreMsg}}</p>
+<p style="color: {{apiResponse.error ? 'red' : 'black'}}">API parser response: {{apiResponse.parserMsg}}</p>
+</span>
+<h5 ng-show="showLoading" class="label btn-success">Loading... </h5>-->

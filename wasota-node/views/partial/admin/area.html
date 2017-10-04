@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>WASOTA admin area</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/adminstyle.css" rel="stylesheet">
+   <script type="text/javascript" src="javascripts/adminfunc.js"></script>
+</script>
+</head>
+<body>
+<nav>
+    <div class="container-fluid">
+		<div  id="bs-example-navbar-collapse-1">      
+				<div class="form-group">
+                </br>
+                </br>
+				</div>
+                <ul class="nav navbar-nav navbar-left">
+				<li><h2>Admin:<div id="MyEdit">This text will change</div></h2></li>
+			</ul>
+            	<ul class="nav navbar-nav navbar-right">
+				<li><a href="http://mex.aksw.org" target="_blank">Visit Our Main Project Page</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+</nav>  	
+                </br>
+            </br>
+
+    <div class="container-fluid main-container">
+  		<div class="col-md-2 sidebar">
+  			<div class="row">
+	<!-- uncomment code for absolute positioning tweek see top comment in css -->
+	<div class="absolute-wrapper"> </div>
+	<!-- Menu -->
+	<div class="side-menu">
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Main Menu -->
+			<div class="side-menu-container">
+				<ul class="nav nav-pills nav-stacked admin-menu">
+					<li class="active"><a href="#" data-target-id="home"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+					<li><a href="#" data-target-id="add"><span class="glyphicon glyphicon-cloud"></span> Add Experiment</a></li>
+                 <li><a href="#" data-target-id="experiments"><span class="glyphicon glyphicon-link"></span> My experiments</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+
+	</div>
+</div>  		</div>
+  		<div class="col-md-10 content">
+  			 <div class="col-md-9 well admin-content" id="home">
+		Welcome! Share your experiments in WASOTA Portal
+    </div>
+            
+             <div class="col-md-9 well admin-content" id="add" style="width: 1200px">
+<div id="content" class="container">
+  <div class="row">
+    <div class="col-md-12">
+		<div class="page-header" style="margin-top: 70px;">
+			<h4>Upload results</h4>
+		</div>
+		<h5 style="margin-top: 35px">Add your experiment:</h5>
+		<p>Choose a graph identifier:</p>
+
+		<div>
+			<input type="text" ng-model="graphUserIdentifier" size="80">
+		</div>
+
+		</br>
+
+		<div>
+		<p>Choose the serialization format:</p>
+
+		<select ng-model="serializationUserFormat" ng-options="a.name for a in formats">
+				<option value="">-- format --</option>
+		</select>
+		</div>
+
+		</br>
+		<div>
+		<p>Paste your MEX file here:</p>
+
+		<textarea ng-model="userGraph" rows="10" cols="150">
+
+		</textarea>
+
+		</div>
+
+
+		<div style="margin-top: 15px">
+			<button ng-click="sendUserGraph()">Go!</button>
+		</div>
+
+		<div style="margin-top: 15px"><span ng-show="showApiCall"><p>API call: <a href="{{apiResponse.apiCall}}" target="_blank">{{apiResponse.apiCall}}</a></p></span></div>
+		<span style="color: {{showApiResponseColor}}" ng-show="showApiResponse">
+		<p>API response: {{coreMsg}}</p>
+		</span>
+		<h5 ng-show="showLoading" class="label btn-success">Loading... </h5>
+		
+	</div>
+  </div>
+</div>
+        </div>
+        
+        
+       <div class="col-md-9 well admin-content" id="experiments" style="width: 1200px">
+             <div id="content" class="container">
+  <div class="row">
+    <div class="col-md-12">
+<!--
+		<div class="page-header" style="margin-top: 70px;">
+			<h1>Search</h1>
+		</div>
+		<h4 style="margin-top: 35px">What is the state of the art for:</h4>
+
+		<div>
+			<select  ng-change="updatePerformance()" ng-model="context" ng-options="k as a for (k,a) in contextList">
+			</select>
+		</div>
+
+
+		<h4 style="margin-top: 35px">Performance Measure</h4>
+
+		<div>
+			<select ng-change="updateTable()" ng-model="performance" ng-options="k for k in performanceList">
+			</select>
+
+		</div>-->
+
+
+		<table ng-table="vm.tableParams" class="table" show-filter="false">
+		    <tr ng-repeat="result in results">
+		        <td title="'Algorithm'" filter="{ algorithmLbl: 'text'}" sortable="'algorithmLbl'">
+		            {{result.algorithmLbl}}</td>
+		        <td title="'Algorithm Class'" filter="{ algorithmClass: 'text'}" sortable="'algorithmClass'">
+		            {{result.algorithmClass}}</td>
+            
+		        <td title="'Experiment ID'" filter="{ experimentID: 'text'}" sortable="'experimentID'">
+		            {{result.experimentID}}</td>
+            
+		        <td title="'Experiment Title'" filter="{ experimentTitle: 'text'}" sortable="'experimentTitle'">
+		            {{result.experimentTitle}}</td>
+            
+		        <td title="'Measure'" filter="{ performance: 'text'}" sortable="'performance'">
+		            {{result.performance}}</td>
+            
+		        <td title="'User'" filter="{ userMail: 'text'}" sortable="'userMail'">
+		            {{result.userMail}}</td>            
+                        
+		        <td title="'Value'" filter="{ performanceValue: 'number'}" sortable="'performanceValue'">
+		            {{result.performanceValue}}</td>
+                    
+                <td title="'Public'">
+					<input type="checkbox" ng-checked="result.visible" ng-click="changeExperiment(result)" />
+		            </td>
+
+   
+		    </tr>
+		</table>
+			
+	</div>
+  </div>
+</div>
+
+       </div>
+  		</div>
+  		<footer class="pull-left footer">
+  			<p class="col-md-12">
+  				<hr class="divider">
+  				Copyright &COPY; 2016 <a href="http://mex.aksw.org">MEX Project</a>
+  			</p>
+  		</footer>
+
+</body>
+</html>

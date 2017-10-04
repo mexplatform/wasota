@@ -1,0 +1,76 @@
+<!--<div class="page-header">
+	<h1 style="">{{appName}}</h1>
+	<h4 style="">What are the State-of-the-art For.</h4>
+</div>
+<div style="float: right"><img src="images/wasota.png"></div>
+
+
+<div class="page-header" style="width: 600px">
+	<h3>Do you have MEX RDF files to be published on the web?</h3>
+</div>
+
+<p> Use WASOTA to add your experiments and compare your results with other experiment configurations. </p>
+
+<p> Also, we are working on the basic documentation which is will be available pretty soon in our <a href="#/wiki">Wiki</a> page.</p>
+<div class="page-header">
+	<h3>A brief explanation...</h3>
+</div>-->
+  				<!-- Main jumbotron for a primary marketing message or call to action -->
+  				<div class="jumbotron">
+  					<div class="container" id="heading">
+  						<h1 class="centered-text lato-bold">WASOTA</h1>
+  						<h4 class="centered-text lato-bold">What Are the States Of The Art?</h4>
+  						<h4>&nbsp;</h4>
+  						<div class="centered-text">
+  							<div id="buttons" class="btn-group">
+  								<a class="btn btn-success btn-lg lato-bold" role="button" href="./#/add"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload results</a>
+  								<a class="btn btn-success btn-lg lato-bold" role="button" href="./#/search"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search</a>
+  								<a class="btn btn-success btn-lg lato-bold" role="button" target="_blank" href="http://mex.aksw.org"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;What is MEX?</a>
+  							</div>
+  						</div>
+  					</div>
+  				</div>
+				
+  				<div id="content" class="container">
+  				    <div id="alerts"></div>
+  				      <div class="row">
+  				        <div class="col-md-4">
+  				          <h3><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload MEX files.</h3>
+  				          <p>Do you have MEX files in RDF format to be published on the web? Add them using the upload interface!</p>
+  				        </div>
+  				        <div class="col-md-4">
+  				          <h3><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;A semantic, light-weight aggregator.</h3>
+  				          <p>Use WASOTA to search through <span id="n-experiments"><img src="images/loader.gif" border="0"/></span> experiments and compare your results with other experiment configurations.</p>
+  				        </div>
+  				        <div class="col-md-4">
+  				          <h3><span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;Gather information via API.</h3>
+  				          <p>We are working on the basic API documentation which is will be available pretty soon in our Wiki page.</p>
+  				        </div>
+  				      </div>
+  				      <div class="row">
+  				        <div class="col-md-6 col-md-offset-3">
+  							<img src="images/wasota.png" border="0"/>
+  				        </div>
+  				      </div>
+  				</div>
+
+				<script type="text/javascript">
+				
+					function fill_n_exp() {
+						var jqxhr = $.ajax( "/proxy/experiments/size" )
+						.done(function(res) {
+							// console.log(res);
+							var answer;
+							if(res["status"] == "ok") {
+								answer = res["data"];
+							} else {
+								answer = "#ERROR#";
+							}
+							$("#n-experiments").html(answer);
+						});
+					}
+					$(function() {
+						fill_n_exp();
+					});
+	
+				</script>

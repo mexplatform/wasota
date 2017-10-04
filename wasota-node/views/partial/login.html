@@ -1,0 +1,31 @@
+<div id="content" class="container">
+  <div class="row">
+    <div class="col-md-12">
+		<div class="page-header" style="margin-top: 70px;">
+			<h1>WASOTA Login</h1>
+		</div>
+		<p>Username:</p>
+		<div>
+			<input type="text" ng-model="userName" size="80">
+		</div>
+		</br>
+		<div>
+		<p>Password:</p>
+		<div>
+			<input type="password" ng-model="userPassword" size="80">
+		</div>
+		</br>
+		<div>
+		<div style="margin-top: 15px">
+			<button ng-click="getUser()">Login!</button>
+		</div>
+        <div class="etc-login-form">
+				<p>New user? <a href="/#/register">create new account</a></p>
+	    </div>
+        		<div style="margin-top: 15px"><span ng-show="showApiCall"><p>API call: <a href="{{apiResponse.apiCall}}" target="_blank">{{apiResponse.apiCall}}</a></p></span></div>
+		<span style="color: {{showApiResponseColor}}" ng-show="showApiResponse">
+		<p>API response: {{coreMsg}}</p>
+		</span>
+		<h5 ng-show="showLoading" class="label btn-success">Loading... </h5>	
+  </div>
+</div>

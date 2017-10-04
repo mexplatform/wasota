@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<script src="javascripts/bootstrap301/jquery-1.7.2.min.js">
+
+</script>
+<script src="javascripts/bootstrap301/bootstrap-slider.js">
+
+</script>
+<script src="javascripts/bootstrap301/script.js">
+
+</script>
+<script src="javascripts/bootstrap301/jquery-loader.js">
+
+</script>
+<script src="javascripts/angular.min.js">
+
+</script>
+<script src="javascripts/angular-route.min.js">
+
+</script>
+<script src="javascripts/mainApp.js">
+
+</script>
+<script src="javascripts/controllers/addCtrl.js">
+
+</script>
+<script src="javascripts/controllers/adminaddCtrl.js">
+
+</script>
+<script src="javascripts/controllers/homeCtrl.js">
+
+</script>
+<script src="javascripts/controllers/searchCtrl.js">
+
+</script>
+<script src="javascripts/controllers/adminsearchCtrl.js">
+
+</script>
+<script src="javascripts/controllers/loginCtrl.js">
+
+</script>
+<script src="javascripts/controllers/registerCtrl.js">
+
+</script>
+<script src="javascripts/controllers/adminCtrl.js">
+
+</script>
+<script src="javascripts/ng-table/ng-table.min.js"></script>
+
+
+<link href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />
+<!-- <link rel="stylesheet" href="https://cdn.rawgit.com/esvit/ng-table/v1.0.0/dist/ng-table.min.css"> -->
+<link rel="stylesheet" href="stylesheets/bootstrap301/bootstrap.min.css">
+<link rel="stylesheet" href="stylesheets/bootstrap301/loader-style.css">
+<link rel="stylesheet" href="stylesheets/bootstrap301/style.css">
+<link rel="icon" type="image/png" href="https://s3.eu-central-1.amazonaws.com/tommaso-soru/files/aksw-logo.png" />
+<script src="javascripts/bootstrap301/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+  
+    function readCookie(name) {
+	
+    var i, c, ca, nameEQ = name + "=";
+
+    ca = document.cookie.split(';');
+    for(i=0;i < ca.length;i++) {
+        c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1,c.length);
+        }
+        if (c.indexOf(nameEQ) == 0) {
+            return c.substring(nameEQ.length,c.length);
+        }
+    }
+    return '';
+}
+
+var sId = readCookie('sessionId')
+console.log("-"+sId+"-");
+
+if(sId === ""){
+  $("#menu2").hide();
+}
+})
+
+</script>
+
+<title>WASOTA - What Are the States Of The Art?</title>
+
+<body>
+
+  <div id="header">
+    <!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="header">
+      <div id="menu" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./"><img src="https://s3.eu-central-1.amazonaws.com/tommaso-soru/files/aksw-logo.png" width="60" border="0" /></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="align-text" href="./">Overview</a></li>
+            <li><a class="align-text" href="./#/add">Upload results</a></li>
+            <li><a class="align-text" href="./#/search">Search</a></li>
+            <li id="menu2"><a class="align-text" href="./#/admin">Admin Area</a></li>
+            <li><a class="align-text" target="_blank" href="https://github.com/cirola2000/wasota/wiki">Wiki</a></li>
+            <li><a class="align-text" target="_blank" href="https://github.com/cirola2000/wasota">Code</a></li>
+            <li><a class="align-text" target="_blank" href="http://aksw.org/">AKSW Group</a></li>
+            <li><a class="align-text" href="./#/login">Login</a></li>
+          </ul>
+        </div>
+        <!--/.navbar-collapse -->
+      </div>
+    </div>
+  </div>
+
+<!--<div id="admin2"> dfsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf</div>-->
+
+  <div id="facet_content" ng-app="main">
+    <div ng-view>
+
+    </div>
+
+  </div>
+
+  <div id="footer">
+    <!--  include your header file or uncomment the include below and create footer.xhtml in this directory -->
+
+    <div class="container">
+      <hr />
+      <footer>
+        <p class="lato">Updated 2016-07-01 - Developed and maintained by <a href="http://aksw.org">AKSW</a>, University of Leipzig.</p>
+      </footer>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
